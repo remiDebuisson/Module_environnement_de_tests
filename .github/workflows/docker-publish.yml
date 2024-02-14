@@ -38,11 +38,17 @@ jobs:
         uses: actions/checkout@v3
 
       # Install the cosign tool except on PR
-      - name: Install Symfony CLI
+      - name: Install Symfony
         run: |
-          curl -sS https://get.symfony.com/cli/installer | bash
-          mv /home/runner/.symfony/cli /usr/local/bin/symfony
-          symfony --version
+          # Install PHP and Symfony dependencies
+          apt-get update && apt-get install -y \
+            php \
+            composer
+          # Install Symfony CLI
+          wget https://get.symfony.com/cli/installer -O - | bash
+          sudo cd /root/.symfony*/bin/symfony
+          sudo cd /usr/local/bin/symfony
+          sudo mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
 
 
       - name: Copy Symfony project
