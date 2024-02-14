@@ -38,6 +38,22 @@ jobs:
         uses: actions/checkout@v3
 
       # Install the cosign tool except on PR
+      - name: Install Symfony
+        run: |
+          # Install PHP and Symfony dependencies
+          apt-get update && apt-get install -y \
+            php \
+            composer
+          # Install Symfony CLI
+          wget https://get.symfony.com/cli/installer -O - | bash
+          mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
+
+      - name: Copy Symfony project
+        run: |
+          cp -r ./src/ /var/www/html
+          cp -r .env .env
+          cp -r ./src .
+
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
         if: github.event_name != 'pull_request'
@@ -96,3 +112,4 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+
