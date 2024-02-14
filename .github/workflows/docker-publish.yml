@@ -52,8 +52,8 @@ jobs:
       - name: Copy Symfony project
         run: |
           sudo cp -r ./src /var/www/html
-          cd /var/www/html
-          composer install --no-scripts --no-autoloader
+          cd /var/www/html/src
+          sudo composer install --no-scripts --no-autoloader
 
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
