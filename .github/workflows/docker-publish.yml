@@ -87,7 +87,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: cd src
-        run: cd /src
+        run: cd src
         
       - name: List files
         run: ls -la
