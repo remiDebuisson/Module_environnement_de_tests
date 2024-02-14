@@ -13,8 +13,8 @@
       <img src="img/logo.png" alt="logo" class="logo-admin"/>
       <h1>Vous êtes connecté!</h1>
       {% if app.user %}
-        <div class="mb-3">
-            Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Déconnection</a>
+        <div style="display:flex;text-align:center;margin:auto;">
+          <a href="{{ path('app_logout') }}">Déconnexion</a>
         </div>
     {% endif %}
     </div>  
