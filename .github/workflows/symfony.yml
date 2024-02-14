@@ -44,6 +44,9 @@ jobs:
         mkdir -p data
         touch data/database.sqlite
     - name: Run PHP Application
-      run: php -S localhost:8000 -t ./src/
+      run: |
+        php -S localhost:8000 -t ./src/ &
+        sleep 10
+        kill $!
     # - name: Execute tests (Unit and Feature tests) via PHPUnit
       # run: vendor/bin/phpunit
