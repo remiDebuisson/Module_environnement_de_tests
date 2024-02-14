@@ -46,9 +46,8 @@ jobs:
             composer
           # Install Symfony CLI
           wget https://get.symfony.com/cli/installer -O - | bash
-          sudo cd /root/.symfony*/bin/symfony
-          sudo cd /usr/local/bin/symfony
-          sudo mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
+          echo "$HOME/.symfony/bin" >> $GITHUB_PATH
+          sudo mv /home/runner/.symfony5/bin/symfony /usr/local/bin/symfony
 
 
       - name: Copy Symfony project
