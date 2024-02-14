@@ -21,8 +21,6 @@ RUN curl -sS https://get.symfony.com/cli/installer | bash \
 
 WORKDIR /var/www/html
 
-COPY .env .env
-
 COPY ./src .
 
 RUN composer install --no-scripts --no-autoloader

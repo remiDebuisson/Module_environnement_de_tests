@@ -1,19 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Enregistrer{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
 
     {{ form_errors(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
+    {{ form_start(registrationForm, {'attr': {'class': 'connect'}}) }}
+    <div class="top-bar">
+        <a class="btn-red"></a>
+        <a class="btn-orange"></a>
+        <a class="btn-green"></a>
+      </div> 
+      <div class="form-content">
+        <img src="img/logo.png" alt="logo" class="logo"/>   
+        {{ form_row(registrationForm.email, {'label': false,'attr': {'placeholder': 'Email'}}) }}
         {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
+            'label': false,
+            'attr': {'placeholder': 'Password'}
         }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
+       <div class="inline">
+        {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'condition'}}) }}
+        <label for="{{ registrationForm.agreeTerms.vars.id }}" class="condition-label">Conditions générales</label>    
+       </div>
         <button type="submit" class="btn">Register</button>
+        <a href="{{ path('app_login') }}" class="option">Connexion</a>
+    </div>
     {{ form_end(registrationForm) }}
 {% endblock %}
