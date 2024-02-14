@@ -46,15 +46,14 @@ jobs:
             composer
           # Install Symfony CLI
           wget https://get.symfony.com/cli/installer -O - | bash
-          echo "$HOME/.symfony/bin" >> $GITHUB_PATH
           sudo mv /home/runner/.symfony5/bin/symfony /usr/local/bin/symfony
 
 
       - name: Copy Symfony project
         run: |
-          cp -r ./src/ /var/www/html
-          cp -r .env .env
-          cp -r ./src .
+          sudo cp -r ./src/ /var/www/html
+          sudo cp -r .env .env
+          sudo cp -r ./src .
 
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
