@@ -19,10 +19,15 @@ WORKDIR /var/www/html
 COPY ./src .
 RUN composer install --no-scripts --no-autoloader
 
+# Utilise une image multi-stage pour copier le code dans une image Nginx
 FROM nginx:latest
+
+# Copie la configuration Nginx
 COPY nginx.conf /etc/nginx/nginx.conf
+
+# Copie le code de l'application depuis l'étape précédente
+COPY --from=0 /var/www/html /var/www/html
+
+# Expose le port et démarre Nginx
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
-
-
-CMD ["symfony", "server:start", "--port=9000", "--no-tls"]
