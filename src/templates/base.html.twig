@@ -2,16 +2,134 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Wireconnect{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+        <style>
+      body,html {
+        background: linear-gradient(rgb(230, 100, 101), rgb(145, 152, 229));
+        padding: 0;
+        margin: 0;
+        width: 100vw;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+      }
+      .connect{
+        margin: auto;
+        width: 325px;
+        height: 350px;
+        background-color: white;
+        border-radius: 8px;
+        opacity: 0.9;
+      }
+      .top-bar{
+        width: 100%;
+        height: 30px;
+        background-color: rgba(142, 142, 147, 0.385);
+        border-radius: 8px 8px 0 0;
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+      .top-bar > a{
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        border-radius: 50px;
+        cursor: pointer;
+      }
+      .btn-red{
+        margin-left: 10px;
+        background-color: rgb(255, 69, 58);
+      }
+      .btn-orange{
+        margin-left: 30px;
+        background-color: rgb(255, 159, 10);
+      }
+      .btn-green{
+        margin-left: 50px;
+        background-color: rgb(50, 215, 75);
+      }
+      .form-content{
+        display: flex;
+        flex-direction: column;
+      }
+      .logo{
+        width: 100px;
+        margin:auto;
+      }
+      input{
+        width: 75%;
+        margin: auto;
+        margin-top: 20px;
+        border-radius: 8px;
+        border: solid 0.8px;
+        padding: 5px;
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+      button{
+        width: 80%;
+        margin: auto;
+        margin-top: 28px;
+        padding: 5px;
+        background-color: rgba(142, 142, 147, 0.385);
+        border-radius: 6px;
+        border:solid 0.8px;
+        cursor: pointer;
+      }
+      button:hover{
+        background-color: rgba(142, 142, 147, 0.152);
+      }
+      .option{
+        width: 78%;
+        margin: auto;
+        margin-top: 16px;
+        color: #1290cc;
+        cursor: pointer;
+      }
+      .window{
+        margin: auto;
+        width: 90%;
+        height: 90vh;
+        background-color: white;
+        border-radius: 8px;
+        opacity: 0.9;
+      }
+      h1{
+        text-align: center;
+      }
+      .row{
+        width: 100%;
+        padding: 20px;
+        margin-top: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        max-width: 480px;
+        margin: auto;
+      }
+      a > svg{
+        margin: auto;
+        width: 40px;
+      }
+      a.btn-admin{
+        display: flex;
+        flex-direction: column;
+        width: 120px;
+        text-align: center;
+        cursor: pointer;
+      }
+      a.btn-admin:hover{
+        opacity: 0.8;
+      }
+      .logo-admin{
+        width: 140px;
+        margin:auto;
+      }
+      </style>
     </head>
     <body>
         {% block body %}{% endblock %}
