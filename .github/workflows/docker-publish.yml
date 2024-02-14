@@ -46,7 +46,7 @@ jobs:
             composer
           # Install Symfony CLI
           wget https://get.symfony.com/cli/installer -O - | bash
-          mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
+          sudo mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
 
       - name: Copy Symfony project
         run: |
