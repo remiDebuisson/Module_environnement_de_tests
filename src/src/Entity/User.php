@@ -29,8 +29,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    private ?\DateTimeInterface $date_update = null;
-
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
@@ -103,19 +101,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-
-    public function getDateUpdate(): ?\DateTimeInterface
-    {
-        return $this->date_update;
-    }
-
-    public function setDateUpdate(?\DateTimeInterface $date_update): static
-    {
-        $this->date_update = $date_update;
-
-        return $this;
-    }
-
     public function isVerified(): bool
     {
         return $this->isVerified;
