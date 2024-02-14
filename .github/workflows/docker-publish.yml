@@ -86,11 +86,8 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: cd src
-        run: cd src
-        
       - name: List files
-        run: ls -la
+        run: ls src -la
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
