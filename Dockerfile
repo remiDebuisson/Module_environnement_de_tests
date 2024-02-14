@@ -16,6 +16,9 @@ RUN apt-get update \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+RUN curl -sS https://get.symfony.com/cli/installer | bash \
+    && mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
+
 WORKDIR /var/www/html
 
 COPY .env .env
@@ -24,6 +27,4 @@ COPY ./src .
 
 RUN composer install --no-scripts --no-autoloader
 
-EXPOSE 9000
-
-CMD ["php-fpm"]
+CMD ["symfony", "server:start", "--port=9000", "--no-tls"]
