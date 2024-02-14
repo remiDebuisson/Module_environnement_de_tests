@@ -51,9 +51,7 @@ jobs:
 
       - name: Copy Symfony project
         run: |
-          sudo cp -r ./src/ /var/www/html
-          sudo cp -r .env .env
-          sudo cp -r ./src .
+          sudo cp -r ./src /var/www/html
 
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
