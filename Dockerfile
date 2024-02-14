@@ -1,6 +1,6 @@
-FROM php:8.0-fpm
-RUN apt-get update \
-    && apt-get install -y \
+# Stage 1: Construire l'environnement PHP avec les extensions nécessaires
+FROM php:8.0-fpm as php_base
+RUN apt-get update && apt-get install -y \
         git \
         unzip \
         libpq-dev \
@@ -19,15 +19,15 @@ WORKDIR /var/www/html
 COPY ./src .
 RUN composer install --no-scripts --no-autoloader
 
-# Utilise une image multi-stage pour copier le code dans une image Nginx
+# Stage 2: Configurer Nginx pour servir l'application
 FROM nginx:latest
-
-# Copie la configuration Nginx
+# Copie la configuration Nginx personnalisée
 COPY nginx.conf /etc/nginx/nginx.conf
+# Copie le code source de l'application depuis le stage PHP
+COPY --from=php_base /var/www/html /var/www/html
 
-# Copie le code de l'application depuis l'étape précédente
-COPY --from=0 /var/www/html /var/www/html
-
-# Expose le port et démarre Nginx
+# Expose le port 80 pour les connexions HTTP
 EXPOSE 80
+
+# Utilise CMD pour démarrer Nginx en arrière-plan
 CMD ["nginx", "-g", "daemon off;"]
