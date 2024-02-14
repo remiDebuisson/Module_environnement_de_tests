@@ -25,4 +25,4 @@ COPY ./src .
 
 RUN composer install --no-scripts --no-autoloader
 
-CMD ["symfony", "server:start", "--port=9000", "--no-tls"]
+RUN symfony server:start
