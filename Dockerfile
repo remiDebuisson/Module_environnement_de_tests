@@ -25,4 +25,4 @@ COPY ./src .
 
 RUN composer install --no-scripts --no-autoloader
 
-RUN symfony server:start
+RUN symfony server:start --port=38701
