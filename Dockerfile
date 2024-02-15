@@ -27,4 +27,4 @@ RUN composer dump-autoload
 
 EXPOSE 9000
 
-CMD ["symfony", "server:start", "--port=9000", "--no-tls"]
+CMD ["sh", "-c", "composer install && symfony server:start --port=9000 --no-tls"]
