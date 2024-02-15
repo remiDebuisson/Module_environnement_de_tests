@@ -16,11 +16,15 @@ RUN apt-get update && apt-get install -y \
         gd
 
 # Installation de Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && chmod +x /usr/local/bin/composer \
+    && composer --version
 
 # Installation de Symfony CLI
 RUN curl -sS https://get.symfony.com/cli/installer | bash \
-    && mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
+    && mv /root/.symfony/bin/symfony /usr/local/bin/symfony \
+    && chmod +x /usr/local/bin/symfony \
+    && symfony --version
 
 # Installation de Nginx et copie de la configuration
 RUN apt-get update && apt-get install -y nginx \
@@ -31,6 +35,9 @@ RUN apt-get update && apt-get install -y nginx \
 # Expose le port 80 pour les connexions HTTP
 EXPOSE 80
 
+RUN composer install -vvv
+# Exécute Composer sans les flags --no-scripts et --no-autoloader pour générer l'autoloader
+
 # Copie le script d'entrée
 COPY entrypoint.sh /usr/local/bin/
 
@@ -39,10 +46,6 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 
 WORKDIR /var/www/html
 COPY ./src .
-
-WORKDIR /usr/local/bin
-RUN composer install -vvv
-# Exécute Composer sans les flags --no-scripts et --no-autoloader pour générer l'autoloader
 
 # Point d'entrée
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
