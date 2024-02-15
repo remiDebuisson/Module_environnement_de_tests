@@ -22,7 +22,7 @@ WORKDIR /var/www/html
 
 COPY ./src .
 
-RUN composer install
+RUN composer install --install-dir=/var/www/html
 RUN composer dump-autoload
 
 EXPOSE 9000
