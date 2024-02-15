@@ -1,8 +1,3 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 name: Symfony
 
 on:
@@ -54,5 +49,14 @@ jobs:
         php -S localhost:8000 -t ./src/ &
         sleep 10
         kill $!
-    # - name: Execute tests (Unit and Feature tests) via PHPUnit
-      # run: vendor/bin/phpunit
+        
+  collect-metrics:
+    runs-on: ubuntu-latest
+    needs: symfony-tests
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+    - name: Show system resources
+      run: |
+        free -m
+        cat /proc/cpuinfo
