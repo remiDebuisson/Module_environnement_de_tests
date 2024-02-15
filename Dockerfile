@@ -23,7 +23,7 @@ WORKDIR /var/www/html
 COPY ./src .
 
 RUN composer dump-autoload
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer install
 
 EXPOSE 9000
 
