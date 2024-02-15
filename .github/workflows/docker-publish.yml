@@ -82,15 +82,11 @@ jobs:
       # https://github.com/docker/metadata-action
       - name: Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@96383f45573cb7f253c731d3b3ab81c87ef81934 # v5.0.0
+        uses: docker/metadata-action@v5.0.0
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
-      - name: List files
-        run: ls src/src -la
-
-      # Build and push Docker image with Buildx (don't push on PR)
-      # https://github.com/docker/build-push-action
+          # Ajouter d'autres options si nécessaire
+      
       - name: Build and push Docker image with Nginx
         id: docker-build
         uses: docker/build-push-action@v2
@@ -100,21 +96,17 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          outputs: type=docker,dest=/tmp/docker-output
-
+          # Retirer la ligne outputs
+      
+      # Ajoute une nouvelle étape pour récupérer le digest de l'image qui a été poussée
       - name: Get the built image's digest
-        run: echo "DIGEST=$(cat /tmp/docker-output)" >> $GITHUB_ENV
-
-
-      # Sign the resulting Docker image digest except on PRs.
-      # This will only write to the public Rekor transparency log when the Docker
-      # repository is public to avoid leaking data.  If you would like to publish
-      # transparency data even for private images, pass --force to cosign below.
-      # https://github.com/sigstore/cosign
+        if: ${{ github.event_name != 'pull_request' }}
+        run: echo "DIGEST=${{ steps.meta.outputs.digest }}" >> $GITHUB_ENV
+      
+      # Et ensuite tu peux signer l'image avec ce digest
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
-        env:
-          TAGS: ${{ steps.meta.outputs.tags }}
-        run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${{ env.DIGEST }}
+        run: cosign sign --yes ${{ steps.meta.outputs.tags }}@${{ env.DIGEST }}
+
 
 
