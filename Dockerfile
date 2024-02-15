@@ -1,4 +1,4 @@
-FROM php:8.0-alpine
+FROM php:8.0-fpm
 
 RUN apt-get update \
     && apt-get install -y \
@@ -25,4 +25,4 @@ COPY ./src .
 RUN composer install --no-scripts --no-autoloader \
     && composer dump-autoload
 
-CMD ["symfony", "server:start", "--port=9000", "--no-tls"]
+CMD ["symfony", "server:start", "--port=3002", "--no-tls"]
