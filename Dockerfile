@@ -19,6 +19,21 @@ WORKDIR /var/www/html
 COPY ./src .
 RUN composer install --no-scripts --no-autoloader
 
-EXPOSE 9000
+# Stage 2: Configurer Nginx pour servir l'application
+FROM nginx:latest
+# Copie la configuration Nginx personnalisée
+COPY nginx.conf /etc/nginx/nginx.conf
+# Copie le code source de l'application depuis le stage PHP
+COPY --from=php_base /var/www/html /var/www/html
 
-CMD ["symfony", "server:start", "--port=9000", "--no-tls"]
+# Copie le script d'entrée
+COPY entrypoint.sh /entrypoint.sh
+
+# Rend le script exécutable
+RUN chmod +x /entrypoint.sh
+
+# Expose le port 80 pour les connexions HTTP
+EXPOSE 80
+
+# Utilise le script d'entrée comme point d'entrée
+ENTRYPOINT ["/entrypoint.sh"]
