@@ -102,7 +102,12 @@ jobs:
       - name: Get the built image's digest
         if: ${{ github.event_name != 'pull_request' }}
         run: echo "DIGEST=${{ steps.meta.outputs.digest }}" >> $GITHUB_ENV
-      
+
+      - name: Print variables for debugging
+        run: |
+          echo "Tags: ${{ steps.meta.outputs.tags }}"
+          echo "Digest: ${{ env.DIGEST }}"
+          
       # Et ensuite tu peux signer l'image avec ce digest
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
