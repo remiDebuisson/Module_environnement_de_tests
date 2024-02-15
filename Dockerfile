@@ -27,7 +27,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=php_base /var/www/html /var/www/html
 
 # Copie le script d'entrée
-COPY entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /usr/local/bin/
 
 # Rend le script exécutable
 RUN chmod +x /entrypoint.sh
