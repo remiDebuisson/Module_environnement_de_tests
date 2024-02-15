@@ -22,9 +22,8 @@ WORKDIR /var/www/html
 
 COPY ./src .
 
-EXPOSE 9000
+RUN composer install
 
-RUN composer install --no-scripts --no-autoloader \
-    && composer dump-autoload
+EXPOSE 9000
 
 CMD ["symfony", "server:start", "--port=9000", "--no-tls"]
