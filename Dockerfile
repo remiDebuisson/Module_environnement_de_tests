@@ -31,3 +31,5 @@ EXPOSE 80
 
 # Utilise CMD pour démarrer Nginx en arrière-plan
 CMD ["nginx", "-g", "daemon off;"]
+
+CMD ["symfony", "server:start", "--port=9000", "--no-tls"]
