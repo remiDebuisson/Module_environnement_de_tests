@@ -30,7 +30,7 @@ RUN mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 # Modification des permissions pour rendre l'exécutable exécutable
 RUN chmod +x /usr/local/bin/symfony
 # Vérification de la version installée de Symfony CLI
-RUN symfony --version
+RUN symfony -v
 
 
 # Installation de Nginx et copie de la configuration
