@@ -1,3 +1,8 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
 name: Symfony
 
 on:
@@ -50,13 +55,11 @@ jobs:
         sleep 10
         kill $!
         
-  collect-metrics:
-    runs-on: ubuntu-latest
-    needs: symfony-tests
-    steps:
-    - name: Check out code
-      uses: actions/checkout@v3
-    - name: Show system resources
-      run: |
-        free -m
-        cat /proc/cpuinfo
+    - name: Monitor Ressource Usage
+    - run: |
+        top -b -n 1 >> resource_usage.txt
+        free -m >> resource_usage.txt
+        df -h >> resource_usage.txt
+
+    # - name: Execute tests (Unit and Feature tests) via PHPUnit
+      # run: vendor/bin/phpunit 
