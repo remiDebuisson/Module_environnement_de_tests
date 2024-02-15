@@ -39,6 +39,8 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 
 WORKDIR /var/www/html
 COPY ./src .
+
+WORKDIR /usr/local/bin
 RUN composer install -vvv
 # Exécute Composer sans les flags --no-scripts et --no-autoloader pour générer l'autoloader
 
