@@ -56,7 +56,7 @@ jobs:
         kill $!
         
     - name: Monitor Ressource Usage
-    - run: |
+      run: |
         top -b -n 1 >> resource_usage.txt
         free -m >> resource_usage.txt
         df -h >> resource_usage.txt
