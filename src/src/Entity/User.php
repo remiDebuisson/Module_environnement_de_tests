@@ -23,6 +23,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
+    #[ORM\Column(type: 'datetime')]
+    private $date_update;
+
     /**
      * @var string The hashed password
      */
@@ -31,6 +34,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
+
+    public function __construct()
+    {
+        $this->date_update = new \DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -109,6 +117,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getDateUpdate(): ?\DateTimeInterface
+    {
+        return $this->date_update;
+    }
+
+    public function setDateUpdate(\DateTimeInterface $date_update): self
+    {
+        $this->date_update = $date_update;
 
         return $this;
     }
