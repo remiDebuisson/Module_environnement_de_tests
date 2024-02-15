@@ -22,8 +22,8 @@ WORKDIR /var/www/html
 
 COPY ./src .
 
-RUN composer install
 RUN composer dump-autoload
+RUN composer install
 
 EXPOSE 9000
 
