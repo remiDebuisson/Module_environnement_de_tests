@@ -37,14 +37,10 @@ COPY entrypoint.sh /usr/local/bin/
 # Rend le script exécutable
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Définition du répertoire de travail
 WORKDIR /var/www/html
-
-# Copie du code source PHP
 COPY ./src .
-
-# Installation des dépendances PHP via Composer
-RUN composer install --no-scripts --no-autoloader
+# Exécute Composer sans les flags --no-scripts et --no-autoloader pour générer l'autoloader
+RUN composer install
 
 # Point d'entrée
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
