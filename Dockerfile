@@ -1,5 +1,7 @@
-# Stage 1: Construire l'environnement PHP avec les extensions nécessaires
+# Stage 1: Utiliser une image de base avec PHP
 FROM php:8.0-fpm as php_base
+
+# Installation des dépendances PHP
 RUN apt-get update && apt-get install -y \
         git \
         unzip \
@@ -12,12 +14,13 @@ RUN apt-get update && apt-get install -y \
         pdo \
         pdo_mysql \
         gd
+
+# Installation de Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Installation de Symfony CLI
 RUN curl -sS https://get.symfony.com/cli/installer | bash \
     && mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
-WORKDIR /var/www/html
-COPY ./src .
-RUN composer install --no-scripts --no-autoloader
 
 # Installation de Nginx et copie de la configuration
 RUN apt-get update && apt-get install -y nginx \
@@ -25,11 +28,8 @@ RUN apt-get update && apt-get install -y nginx \
     && echo "daemon off;" >> /etc/nginx/nginx.conf \
     && rm /etc/nginx/sites-enabled/default
 
-# Copie la configuration Nginx personnalisée
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# Copie le code source de l'application depuis le stage PHP
-COPY --from=php_base /var/www/html /var/www/html
+# Expose le port 80 pour les connexions HTTP
+EXPOSE 80
 
 # Copie le script d'entrée
 COPY entrypoint.sh /usr/local/bin/
@@ -37,8 +37,14 @@ COPY entrypoint.sh /usr/local/bin/
 # Rend le script exécutable
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Expose le port 80 pour les connexions HTTP
-EXPOSE 80
+# Définition du répertoire de travail
+WORKDIR /var/www/html
 
-# Utilise le script d'entrée comme point d'entrée
+# Copie du code source PHP
+COPY ./src .
+
+# Installation des dépendances PHP via Composer
+RUN composer install --no-scripts --no-autoloader
+
+# Point d'entrée
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
