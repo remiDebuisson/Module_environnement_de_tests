@@ -50,7 +50,7 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 
 WORKDIR /var/www/html
 COPY ./src .
-RUN composer install --no-scripts
+RUN composer install
 
 # Point d'entrée
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
