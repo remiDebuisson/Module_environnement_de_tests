@@ -35,9 +35,6 @@ RUN apt-get update && apt-get install -y nginx \
 # Expose le port 80 pour les connexions HTTP
 EXPOSE 80
 
-RUN composer install -vvv
-# Exécute Composer sans les flags --no-scripts et --no-autoloader pour générer l'autoloader
-
 # Copie le script d'entrée
 COPY entrypoint.sh /usr/local/bin/
 
@@ -46,6 +43,7 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 
 WORKDIR /var/www/html
 COPY ./src .
+RUN composer install --no-scripts --no-autoloader
 
 # Point d'entrée
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
