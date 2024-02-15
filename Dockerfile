@@ -26,7 +26,7 @@ RUN curl -sS https://get.symfony.com/cli/installer > /tmp/symfony_installer.sh
 # Exécution du script d'installation
 RUN bash /tmp/symfony_installer.sh
 # Déplacement de l'exécutable Symfony vers /usr/local/bin
-RUN sudo mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+RUN sudo mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 # Modification des permissions pour rendre l'exécutable exécutable
 RUN sudo chmod +x /usr/local/bin/symfony
 # Vérification de la version installée de Symfony CLI
