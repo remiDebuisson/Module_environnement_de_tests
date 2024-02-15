@@ -30,7 +30,7 @@ COPY --from=php_base /var/www/html /var/www/html
 COPY entrypoint.sh /usr/local/bin/
 
 # Rend le script exécutable
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Expose le port 80 pour les connexions HTTP
 EXPOSE 80
