@@ -21,10 +21,17 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
     && composer --version
 
 # Installation de Symfony CLI
-RUN curl -sS https://get.symfony.com/cli/installer | bash \
-    && mv /root/.symfony/bin/symfony /usr/local/bin/symfony \
-    && chmod +x /usr/local/bin/symfony \
-    && symfony --version
+# Téléchargement du script d'installation de Symfony CLI
+RUN curl -sS https://get.symfony.com/cli/installer > /tmp/symfony_installer.sh
+# Exécution du script d'installation
+RUN bash /tmp/symfony_installer.sh
+# Déplacement de l'exécutable Symfony vers /usr/local/bin
+RUN mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+# Modification des permissions pour rendre l'exécutable exécutable
+RUN chmod +x /usr/local/bin/symfony
+# Vérification de la version installée de Symfony CLI
+RUN symfony --version
+
 
 # Installation de Nginx et copie de la configuration
 RUN apt-get update && apt-get install -y nginx \
