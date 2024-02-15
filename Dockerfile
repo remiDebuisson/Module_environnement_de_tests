@@ -19,10 +19,15 @@ WORKDIR /var/www/html
 COPY ./src .
 RUN composer install --no-scripts --no-autoloader
 
-# Stage 2: Configurer Nginx pour servir l'application
-FROM nginx:latest
+# Installation de Nginx et copie de la configuration
+RUN apt-get update && apt-get install -y nginx \
+    && rm -rf /var/lib/apt/lists/* \
+    && echo "daemon off;" >> /etc/nginx/nginx.conf \
+    && rm /etc/nginx/sites-enabled/default
+
 # Copie la configuration Nginx personnalisée
 COPY nginx.conf /etc/nginx/nginx.conf
+
 # Copie le code source de l'application depuis le stage PHP
 COPY --from=php_base /var/www/html /var/www/html
 
