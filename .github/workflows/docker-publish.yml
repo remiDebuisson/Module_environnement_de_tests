@@ -85,7 +85,6 @@ jobs:
         uses: docker/metadata-action@v5.0.0
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          # Ajouter d'autres options si nécessaire
       
       - name: Build and push Docker image with Nginx
         id: docker-build
@@ -96,8 +95,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          # Retirer la ligne outputs
-      
+
       # Ajoute une nouvelle étape pour récupérer le digest de l'image qui a été poussée
       - name: Get the built image's digest
         if: ${{ github.event_name != 'pull_request' }}
